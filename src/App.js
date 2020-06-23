@@ -18,11 +18,11 @@ function App() {
 
     const [ lista, setLista ] = useState([]); 
     const [ open, setOpen ] = useState(false);
-    const [ chamado, setChamado ] = useState('');
-    const [ descricao,SetDescricao] = useState('');
+    const [ compromisso, setCompromisso ] = useState('');
+    const [ data,SetData] = useState('');
 
     function loadData() { 
-        api.get('/chamado').then((response) => { 
+        api.get('/agenda').then((response) => { 
             const itens = response.data;
             setLista(itens);
         });
@@ -34,24 +34,24 @@ function App() {
 
     const closeModal = () => setOpen(false);
 
-     function addChamado() { 
-         const name = chamado;
-         const desc = descricao;
-         api.post('/chamado', { chamado: name, descricao: desc, concluido: false }).then((response) => {
-            setChamado('');
-            SetDescricao('');
+     function addCompromisso() { 
+         const name = compromisso;
+         const date = data;
+         api.post('/chamado', { compromisso: name, data: date, realizado: false }).then((response) => {
+            setCompromisso('');
+            SetData('');
             setOpen(false);
             loadData();
         })
      }
      function markAsDone(id) { 
-         api.patch(`/chamado/${id}/done`).then((response) => {
+         api.patch(`/agenda/${id}/done`).then((response) => {
              loadData()
          })
      }
 
-     function deleteChamado(id) {
-         api.delete(`/chamado/${id}`).then((response) => { 
+     function deleteCompromisso(id) {
+         api.delete(`/agenda/${id}`).then((response) => { 
             loadData()
          })
      }
@@ -65,13 +65,13 @@ function App() {
                 {lista.map(item => (
                     <TableRow key={item.id}>
                         <TableCell>{item.id}</TableCell>
-                        <TableCell>{item.chamado}</TableCell>
-                        <TableCell>{item.descricao}</TableCell>
+                        <TableCell>{item.compromisso}</TableCell>
+                        <TableCell>{item.data}</TableCell>
                         <TableCell>
-                            <input type="checkbox" checked={item.concluido} onChange={() => markAsDone(item.id)}/>
+                            <input type="checkbox" checked={item.realizado} onChange={() => markAsDone(item.id)}/>
                         </TableCell>
                         <TableCell>
-                            <Button variant="outlined" size="small" color="secondary" onClick={() => deleteChamado(item.id)}>Apagar</Button>
+                            <Button variant="outlined" size="small" color="secondary" onClick={() => deleteCompromisso(item.id)}>Apagar</Button>
                         </TableCell>
                     </TableRow>
                 ))}
@@ -88,26 +88,26 @@ function App() {
             <DialogTitle id="form-dialog-title">Novo Chamado</DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    Digite qual problema esta ocorrendo.
+                   Adicione um novo compromisso
                 </DialogContentText>
                 <TextField
                     autoFocus
                     margin="dense"
                     id="name"
-                    label="Chamado"
+                    label="Compromisso"
                     type="email"
                     fullWidth
-                    value={chamado}
-                    onChange={e => setChamado(e.target.value)}
+                    value={compromisso}
+                    onChange={e => setCompromisso(e.target.value)}
                 />
                 <TextField
                     margin="dense"
-                    id="desc"
-                    label="Descricao"
+                    id="date"
+                    label="Data"
                     type="email"
                     fullWidth
-                    value={descricao}
-                    onChange={e => SetDescricao(e.target.value)}
+                    value={data}
+                    onChange={e => SetData(e.target.value)}
                 />
 
             </DialogContent>
