@@ -37,7 +37,7 @@ function App() {
      function addCompromisso() { 
          const name = compromisso;
          const date = data;
-         api.post('/chamado', { compromisso: name, data: date, realizado: false }).then((response) => {
+         api.post('/agenda', { compromisso: name, data: date, realizado: false }).then((response) => {
             setCompromisso('');
             SetData('');
             setOpen(false);
