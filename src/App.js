@@ -14,7 +14,6 @@ import {
     DialogContentText, 
     TextField, 
     DialogActions} from '@material-ui/core';
-import './style.css';
 
 function App() {
 
