@@ -115,7 +115,7 @@ function App() {
                 <Button onClick={closeModal} color="primary">
                     Cancelar
                 </Button>
-                <Button onClick={addChamado} color="primary">
+                <Button onClick={addCompromisso} color="primary">
                     Salvar
                 </Button>
             </DialogActions>
